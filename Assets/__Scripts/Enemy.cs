@@ -9,7 +9,7 @@ public float fireRate = 0.3f; // Seconds/shot (Unused)
 public float health = 10;
 public int score = 100; // Points earned for destroying this
 
-private BoundsCheck bndCheck; // a
+protected BoundsCheck bndCheck; // a
 
 void Awake() { // b
    bndCheck = GetComponent<BoundsCheck>();
