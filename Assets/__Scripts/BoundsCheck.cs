@@ -11,39 +11,46 @@ public bool keepOnScreen = true;
 public bool isOnScreen = true;
 public float camWidth;
 public float camHeight;
+[HideInInspector]
+public bool offRight, offLeft, offUp, offDown; // a
 
 void Awake() {
 camHeight = Camera.main.orthographicSize; // b
 camWidth = camHeight * Camera.main.aspect; // c
 }
 
-void LateUpdate () { // d
+void LateUpdate () {
 Vector3 pos = transform.position;
 isOnScreen = true;
+offRight = offLeft = offUp = offDown = false; // b
 
-if (pos.x > camWidth - radius) {
-pos.x = camWidth - radius;
-isOnScreen = false;
+if ( pos.x > camWidth - radius ) {
+   pos.x = camWidth - radius;
+   offRight = true; // c
 }
 
-if (pos.x < -camWidth + radius) {
+if (pos.x<- camWidth + radius )
+{
 pos.x = -camWidth + radius;
-isOnScreen = false;
+offLeft = true; // c
 }
 
-if (pos.y > camHeight - radius) {
+if ( pos.y > camHeight - radius ) {
 pos.y = camHeight - radius;
-isOnScreen = false;
+offUp = true; // c
 }
 
-if (pos.y <-camHeight +radius) {
+if ( pos.y < -camHeight + radius ) {
 pos.y = -camHeight + radius;
-isOnScreen = false;
+offDown = true; // c
 }
 
-if ( keepOnScreen && !isOnScreen ) { // f
-transform.position = pos; // g
+isOnScreen = !(offRight || offLeft || offUp || offDown); // d
+
+if ( keepOnScreen && !isOnScreen ) {
+transform.position = pos;
 isOnScreen = true;
+offRight = offLeft = offUp = offDown = false; // e
 }
 }
 // Draw the bounds in the Scene pane using OnDrawGizmos()
